@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow"><title>가족 사이 초대</title><link rel="stylesheet" href="style.css"></head>
+<body><main><p class="eyebrow">FAMILY TIES</p><h1>가족 초대를 받았어요</h1>
+<p>앱에서 초대를 확인하고 Google 또는 카카오로 로그인한 뒤, 내 이름을 입력하고 ‘가족 참여’를 눌러 주세요. 링크를 여는 것만으로 가족에 참여하지 않습니다.</p>
+<section id="invitation" hidden><p><a id="open">앱에서 초대 확인</a></p><p>초대 코드: <code id="code"></code></p><button id="copy" type="button">초대 코드 복사</button><p id="status" role="status"></p></section>
+<p id="invalid" hidden>올바른 초대 링크가 아닙니다. 초대한 가족에게 새 링크를 요청해 주세요.</p>
+<h2>앱이 없다면</h2><p><a href="https://play.google.com/store/apps/details?id=org.rootory.familyties">Google Play에서 가족 사이 설치</a></p><p>현재 비공개 테스트 중으로 등록된 테스터만 설치할 수 있습니다. 설치 후 이 페이지로 돌아와 초대를 다시 열거나, 앱의 ‘계정과 가족 공유’에서 위 초대 코드를 입력하세요.</p>
+<p>초대는 생성 후 7일 동안 한 명이 사용할 수 있습니다. 만료되었거나 취소·사용된 초대는 새로 받아야 합니다.</p><p><a href="privacy_policy.html">개인정보처리방침</a></p>
+</main><script>
+'use strict';
+const code = location.hash.slice(1);
+if (/^[0-9a-f]{36}$/.test(code)) {
+  document.getElementById('invitation').hidden = false;
+  document.getElementById('code').textContent = code;
+  document.getElementById('open').href = 'familyties://invite?code=' + code;
+  document.getElementById('copy').onclick = async () => {
+    try { await navigator.clipboard.writeText(code); document.getElementById('status').textContent = '초대 코드를 복사했어요.'; }
+    catch { document.getElementById('status').textContent = '위 초대 코드를 길게 눌러 직접 복사해 주세요.'; }
+  };
+} else { document.getElementById('invalid').hidden = false; }
+</script></body></html>
